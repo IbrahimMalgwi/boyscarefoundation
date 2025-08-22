@@ -13,7 +13,6 @@ import event10 from "../assets/images/event10.jpg";
 import event11 from "../assets/images/event11.jpg";
 import event12 from "../assets/images/event12.jpg";
 
-
 const events = [
     event1,
     event2,
@@ -29,13 +28,19 @@ const events = [
     event12,
 ];
 
-
 export default function Events() {
-    const [showAll, setShowAll] = useState(false);
-    const displayed = showAll ? events : events.slice(0, 6);
+    const [visibleCount, setVisibleCount] = useState(6);
+
+    const handleShowMore = () => {
+        setVisibleCount((prev) => Math.min(prev + 6, events.length));
+    };
+
+    const handleShowLess = () => {
+        setVisibleCount(6);
+    };
 
     return (
-        <section id="events" className="py-20 bg-white dark:bg-gray-900">
+        <section id="events" className="py-20 bg-white dark:bg-gray-900 relative">
             <div className="container mx-auto px-6">
                 {/* Heading */}
                 <motion.div
@@ -55,32 +60,54 @@ export default function Events() {
 
                 {/* Event Grid */}
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {displayed.map((img, i) => (
+                    {events.slice(0, visibleCount).map((img, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="overflow-hidden rounded-xl shadow-lg group"
+                            whileHover={{ scale: 1.05, rotate: 1 }}
+                            className="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer"
                         >
                             <img
                                 src={img}
                                 alt={`Event ${i + 1}`}
-                                className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500"
+                                className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
+                            />
+                            {/* shimmer */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100"
+                                initial={false}
+                                animate={{ x: ["-100%", "100%"] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
                             />
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Show More / Show Less Button */}
-                <div className="text-center mt-8">
-                    <button
-                        onClick={() => setShowAll(!showAll)}
-                        className="px-6 py-2 rounded-lg text-white font-medium bg-gradient-to-r from-red-600 to-blue-600 hover:opacity-90 transition"
-                    >
-                        {showAll ? "Show Less" : "Show More"}
-                    </button>
+                {/* Show More / Show Less Buttons */}
+                <div className="text-center mt-10 flex justify-center gap-4">
+                    {visibleCount < events.length && (
+                        <motion.button
+                            onClick={handleShowMore}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-8 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-red-600 to-blue-600 shadow-md hover:shadow-lg transition"
+                        >
+                            Show More
+                        </motion.button>
+                    )}
+                    {visibleCount > 6 && (
+                        <motion.button
+                            onClick={handleShowLess}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-8 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-blue-600 to-red-600 shadow-md hover:shadow-lg transition"
+                        >
+                            Show Less
+                        </motion.button>
+                    )}
                 </div>
             </div>
         </section>

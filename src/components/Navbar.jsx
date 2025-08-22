@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { useTheme } from "../hooks/useTheme";
-import { Moon, Sun } from "lucide-react";
-
-
+import { Moon, Sun, X } from "lucide-react";
 
 export default function Navbar() {
     const { theme, toggleTheme } = useTheme();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const links = ["about", "events", "academy", "club", "team", "contact"];
 
     return (
         <div className="bg-white dark:bg-gray-900 relative overflow-hidden">
@@ -41,14 +43,7 @@ export default function Navbar() {
 
                         {/* Desktop links */}
                         <div className="hidden md:flex items-center space-x-8">
-                            {[
-                                "about",
-                                "events",
-                                "academy",
-                                "club",
-                                "team",      // ✅ Added Team here
-                                "contact",
-                            ].map((link) => (
+                            {links.map((link) => (
                                 <a
                                     key={link}
                                     href={`#${link}`}
@@ -76,22 +71,63 @@ export default function Navbar() {
                         </div>
 
                         {/* Mobile Menu Button */}
-                        <button className="md:hidden p-2 rounded-lg border bg-background dark:bg-gray-800">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-6 h-6 text-gray-700 dark:text-gray-200"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                            >
-                                <line x1="4" y1="6" x2="20" y2="6" />
-                                <line x1="4" y1="12" x2="20" y2="12" />
-                                <line x1="4" y1="18" x2="20" y2="18" />
-                            </svg>
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="md:hidden p-2 rounded-lg border bg-background dark:bg-gray-800"
+                        >
+                            {isOpen ? (
+                                <X className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6 text-gray-700 dark:text-gray-200"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <line x1="4" y1="6" x2="20" y2="6" />
+                                    <line x1="4" y1="12" x2="20" y2="12" />
+                                    <line x1="4" y1="18" x2="20" y2="18" />
+                                </svg>
+                            )}
                         </button>
                     </div>
                 </div>
+
+                {/* Mobile Dropdown */}
+                {isOpen && (
+                    <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+                        <div className="flex flex-col items-center py-6 space-y-6">
+                            {links.map((link) => (
+                                <a
+                                    key={link}
+                                    href={`#${link}`}
+                                    className="text-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-red-400 transition-colors capitalize"
+                                    onClick={() => setIsOpen(false)} // close menu after click
+                                >
+                                    {link}
+                                </a>
+                            ))}
+
+                            {/* Theme Toggle (Mobile) */}
+                            <button
+                                onClick={toggleTheme}
+                                className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition"
+                            >
+                                {theme === "light" ? (
+                                    <>
+                                        <Moon className="w-5 h-5" /> Dark
+                                    </>
+                                ) : (
+                                    <>
+                                        <Sun className="w-5 h-5" /> Light
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                )}
             </nav>
         </div>
     );

@@ -17,7 +17,7 @@ export default function Contact() {
         },
         {
             icon: <Phone className="w-7 h-7 text-blue-600" />,
-            title: "Phone",
+            title: "Phone No.",
             value: "+234 803 591 9884",
             link: "tel:+2348035919884",
         },

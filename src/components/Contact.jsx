@@ -4,25 +4,25 @@ import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 export default function Contact() {
     const contacts = [
         {
-            icon: <Mail className="w-6 h-6 text-red-600" />,
+            icon: <Mail className="w-7 h-7 text-red-600" />,
             title: "Email",
             value: "Info@TheBoyscarefoundation@gmail.com",
             link: "mailto:Info@TheBoyscarefoundation@gmail.com",
         },
         {
-            icon: <MessageCircle className="w-6 h-6 text-green-600" />,
+            icon: <MessageCircle className="w-7 h-7 text-green-600" />,
             title: "WhatsApp",
             value: "+234 807 143 0477",
             link: "https://wa.me/2348071430477",
         },
         {
-            icon: <Phone className="w-6 h-6 text-blue-600" />,
+            icon: <Phone className="w-7 h-7 text-blue-600" />,
             title: "Phone",
             value: "+234 803 591 9884",
             link: "tel:+2348035919884",
         },
         {
-            icon: <MapPin className="w-6 h-6 text-violet-600" />,
+            icon: <MapPin className="w-7 h-7 text-violet-600" />,
             title: "Address",
             value: "Port Harcourt, Nigeria",
             link: null,
@@ -53,26 +53,31 @@ export default function Contact() {
                     {contacts.map((c, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition"
+                            transition={{ duration: 0.6, delay: i * 0.15 }}
+                            whileHover={{ scale: 1.05 }}
+                            className="flex"
                         >
-                            <div className="flex justify-center mb-4">{c.icon}</div>
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                {c.title}
-                            </h3>
-                            {c.link ? (
-                                <a
-                                    href={c.link}
-                                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                                >
-                                    {c.value}
-                                </a>
-                            ) : (
-                                <p className="text-gray-700 dark:text-gray-300">{c.value}</p>
-                            )}
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition h-full flex flex-col justify-between max-w-sm mx-auto w-full">
+                                <div className="flex justify-center mb-4">{c.icon}</div>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                                    {c.title}
+                                </h3>
+                                {c.link ? (
+                                    <a
+                                        href={c.link}
+                                        className="text-blue-600 dark:text-blue-400 hover:underline break-words"
+                                    >
+                                        {c.value}
+                                    </a>
+                                ) : (
+                                    <p className="text-gray-700 dark:text-gray-300 break-words">
+                                        {c.value}
+                                    </p>
+                                )}
+                            </div>
                         </motion.div>
                     ))}
                 </div>

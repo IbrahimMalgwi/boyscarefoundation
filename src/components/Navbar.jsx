@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { Moon, Sun, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
     const { theme, toggleTheme } = useTheme();
@@ -95,39 +96,47 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Mobile Dropdown */}
-                {isOpen && (
-                    <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-                        <div className="flex flex-col items-center py-6 space-y-6">
-                            {links.map((link) => (
-                                <a
-                                    key={link}
-                                    href={`#${link}`}
-                                    className="text-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-red-400 transition-colors capitalize"
-                                    onClick={() => setIsOpen(false)} // close menu after click
-                                >
-                                    {link}
-                                </a>
-                            ))}
+                {/* Mobile Dropdown with Animation */}
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+                        >
+                            <div className="flex flex-col items-center py-6 space-y-6">
+                                {links.map((link) => (
+                                    <a
+                                        key={link}
+                                        href={`#${link}`}
+                                        className="text-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-red-400 transition-colors capitalize"
+                                        onClick={() => setIsOpen(false)} // close after click
+                                    >
+                                        {link}
+                                    </a>
+                                ))}
 
-                            {/* Theme Toggle (Mobile) */}
-                            <button
-                                onClick={toggleTheme}
-                                className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition"
-                            >
-                                {theme === "light" ? (
-                                    <>
-                                        <Moon className="w-5 h-5" /> Dark
-                                    </>
-                                ) : (
-                                    <>
-                                        <Sun className="w-5 h-5" /> Light
-                                    </>
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                )}
+                                {/* Theme Toggle (Mobile) */}
+                                <button
+                                    onClick={toggleTheme}
+                                    className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition"
+                                >
+                                    {theme === "light" ? (
+                                        <>
+                                            <Moon className="w-5 h-5" /> Dark
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Sun className="w-5 h-5" /> Light
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
         </div>
     );

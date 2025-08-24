@@ -16,10 +16,10 @@ export default function Club() {
                     transition={{ duration: 0.9, ease: "easeOut" }}
                 >
                     <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">
-                        School Clubs
+                        Boys Court Mentoring Club
                     </h2>
                     <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                        The <span className="font-semibold text-red-600 dark:text-red-400">BoysCare Club</span>
+                        The <span className="font-semibold text-red-600 dark:text-red-400">Boys Court Mentoring Club</span>
                         {" "}is designed for school boys, fostering peer learning, mentorship,
                         leadership, and community engagement within schools.
                     </p>

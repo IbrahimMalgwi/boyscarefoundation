@@ -16,10 +16,10 @@ export default function Academy() {
                     transition={{ duration: 0.9, ease: "easeOut" }}
                 >
                     <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
-                        The Academy
+                        Boys Court Academy
                     </h2>
                     <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                        The <span className="font-semibold text-blue-600 dark:text-blue-400">Boyscare Academy</span>
+                        The <span className="font-semibold text-blue-600 dark:text-blue-400">Boys Court Academy</span>
                         {" "}is a mentorship program tailored for young boys. It equips them with leadership,
                         life skills, and positive values needed to thrive in today’s world.
                     </p>
